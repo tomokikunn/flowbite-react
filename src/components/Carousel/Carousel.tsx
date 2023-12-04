@@ -62,7 +62,7 @@ export interface DefaultLeftRightControlProps extends ComponentProps<'div'> {
   theme?: DeepPartial<FlowbiteCarouselTheme>;
 }
 
-export const Carousel: FC<CarouselProps> = ({
+export const SCRCarousel: FC<CarouselProps> = ({
   children,
   indicators = true,
   leftControl,
@@ -74,6 +74,7 @@ export const Carousel: FC<CarouselProps> = ({
   theme: customTheme = {},
   onSlideChange = null,
   pauseOnHover = false,
+  initialSlide = 0,
   ...props
 }) => {
   const theme = mergeDeep(getTheme().carousel, customTheme);
@@ -101,13 +102,19 @@ export const Carousel: FC<CarouselProps> = ({
       if (!items) return;
       item = (item + items.length) % items.length;
       if (carouselContainer.current) {
-        carouselContainer.current.scrollLeft = carouselContainer.current.clientWidth * item;
+        carouselContainer.current. = carouselContainer.current.clientWidth * item;
       }
       setActiveItem(item);
     },
     [items],
   );
 
+  useEffect(() => {
+  if(initialSlide) {
+    navigateTo(initialSlide)()
+  }
+  }, []);
+  
   useEffect(() => {
     if (carouselContainer.current && !isDragging && carouselContainer.current.scrollLeft !== 0) {
       setActiveItem(Math.round(carouselContainer.current.scrollLeft / carouselContainer.current.clientWidth));
