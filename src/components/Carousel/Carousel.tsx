@@ -102,7 +102,7 @@ export const SCRCarousel: FC<CarouselProps> = ({
       if (!items) return;
       item = (item + items.length) % items.length;
       if (carouselContainer.current) {
-        carouselContainer.current. = carouselContainer.current.clientWidth * item;
+        carouselContainer.current.scrollLeft = carouselContainer.current.clientWidth * item;
       }
       setActiveItem(item);
     },
